@@ -6,10 +6,12 @@ from datetime import datetime
 
 listLength = 0
 
+#Creates a new empty window
 def newWindow():
     w = tk.Toplevel(root)
     return w
 
+#This function fetch protocol specific data for each packet
 def fetchUpdate():
     try:
         selectionIndex = int(list1.curselection()[0])
@@ -101,6 +103,7 @@ def fetchUpdate():
         errorLabel = tk.Label(detailsWindow,text = 'Uh oh !!.....It looks like this is an unsupported packet type.',fg = 'red',font='Helvetica 12 bold')
         errorLabel.pack()
 
+#Starts the sniffer
 def start():
     def initiate():
         global_data.init = True
@@ -108,14 +111,17 @@ def start():
     thread = threading.Thread(target=initiate)  
     thread.start()  
 
+#Stops the sniffer
 def stop(): 
     global_data.init = False
     print("Execution Stoped.")
 
+#Destroys window
 def kill():
     stop()
     root.destroy()
 
+#Maintains the date and time in the program
 def tick():
     time_string = datetime.now().time()
     current_status = global_data.init
@@ -126,6 +132,7 @@ def tick():
     clock.config(text="Time: "+str(time_string)[:8])
     clock.after(200, tick)
 
+#Updates the captured packet list
 def listUpdate():
     global listLength
     if listLength != len(global_data.topList):
